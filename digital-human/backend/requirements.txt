@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+edge-tts
+openai
+imageio-ffmpeg
+numpy
+pillow
+httpx
+pytest
