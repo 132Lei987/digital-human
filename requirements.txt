@@ -1,29 +1,16 @@
-# ============================================================
-# 文旅数字人「真人对话」项目依赖
-# 工单编号：人工智能CV-AIGC-18-文旅智能体-智能导览与互动体验任务
-#
-# 建议 Python 3.10+，本项目在 Python 3.12.7 下验证通过。
-# 版本号已锁定（pin），保证不同环境安装后行为一致、可复现。
-#
-# 安装：pip install -r requirements.txt
-# 国内加速：pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-# ============================================================
 
-# --- Web 框架与服务器 ---
+
+
 fastapi==0.136.1
 uvicorn==0.46.0
 
-# --- 大模型调用（DeepSeek，OpenAI 兼容接口） ---
 openai==2.48.0
 
-# --- 语音合成（Edge TTS：免费、无需 key、自带字级时间戳） ---
 edge-tts==7.2.8
 
-# --- 图像 / 视频处理（口型帧抽取） ---
 imageio-ffmpeg==0.6.0
 numpy==1.26.4
 pillow==12.3.0
 
-# --- 测试 ---
 pytest==9.1.1
 httpx==0.28.1
