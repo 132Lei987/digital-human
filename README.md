@@ -43,7 +43,6 @@ day6_week1_digital-human/
 │   │   └── mouth_frames/             # 抽好的 4 张嘴型帧（mouth_0~3.png）
 │   └── README.md                     # 项目内说明（含配置与运行）
 ├── requirements.txt                  # 一键安装全部依赖（本文件）
-├── 素材.mp4                          # 素材视频的冗余副本（与 assets 内相同）
 ├── docs/superpowers/
 │   ├── specs/                        # 设计文档
 │   └── plans/                        # 实现计划
