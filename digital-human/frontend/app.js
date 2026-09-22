@@ -13,6 +13,7 @@ const MOUTH = [
 
 let words = [];
 let rafId = null;
+let currentUrl = null;   // 跟踪当前 Blob URL，用于 revoke
 
 function mouthLevelForWord(word) {
   if (!word) return 0;              // 不说话 -> 闭嘴
@@ -23,7 +24,7 @@ function mouthLevelForWord(word) {
 
 function currentWord(tMs) {
   for (const w of words) {
-    if (tMs >= w.start_ms && tMs <= w.start_ms + w.duration_ms) return w;
+    if (tMs >= w.start_ms && tMs < w.start_ms + w.duration_ms) return w;  // 左闭右开
   }
   return null;
 }
@@ -38,6 +39,10 @@ function stopPlayback() {
   cancelAnimationFrame(rafId);
   audio.pause();
   audio.currentTime = 0;
+  if (currentUrl) {
+    URL.revokeObjectURL(currentUrl);
+    currentUrl = null;
+  }
   avatar.src = MOUTH[0];
 }
 
@@ -62,10 +67,17 @@ async function sendMessage() {
     });
     const data = await resp.json();
     if (data.audio_base64) {
-      audio.src = URL.createObjectURL(base64ToBlob(data.audio_base64, 'audio/mpeg'));
+      stopPlayback();  // revoke 旧的 Blob URL（若有）
+      currentUrl = URL.createObjectURL(base64ToBlob(data.audio_base64, 'audio/mpeg'));
+      audio.src = currentUrl;
       words = data.words || [];
-      await audio.play();
-      tick();
+      try {
+        await audio.play();
+        tick();
+      } catch (e) {
+        console.warn('播放失败', e);
+        avatar.src = MOUTH[0];
+      }
     } else {
       console.warn('未返回音频', data.error);
       avatar.src = MOUTH[0];
