@@ -23,7 +23,8 @@
 ## 运行
 
 ```bash
-# 1. 首次运行先抽取嘴型帧（素材 video 需已放在 assets/ 下）
+# 1. 首次运行先抽取嘴型帧
+#    素材视频需放在 assets/ 下，且文件名必须为 素材.mp4
 cd backend && python mouthframes.py && cd ..
 
 # 2. 启动服务（从 backend 目录启动）

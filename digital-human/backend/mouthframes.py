@@ -2,7 +2,7 @@
 
 工单编号：人工智能CV-AIGC-18-文旅智能体-智能导览与互动体验任务
 
-用法：python backend/mouthframes.py
+用法：cd backend && python mouthframes.py
 输出：assets/mouth_frames/mouth_0.png ~ mouth_3.png（除嘴巴区域外画面一致）
 """
 from __future__ import annotations
