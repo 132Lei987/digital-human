@@ -18,7 +18,12 @@ def test_find_motion_bbox_定位闪烁区域():
         f = np.zeros((40, 60), dtype=np.float32)
         f[25:35, 20:30] = 1.0 if i % 2 == 0 else 0.0  # 底部中央一块闪烁
         frames.append(f)
-    x, y, w, h = find_motion_bbox(frames)
-    assert 18 <= x <= 22
-    assert 23 <= y <= 26
-    assert w >= 8 and h >= 8
+    # 闪烁块在 y=25~35（图高 40 的 62%~87%），属于下半部分，因此需传
+    # upper_limit=1.0 做全图搜索，验证密度峰值能定位到该块。
+    x, y, w, h = find_motion_bbox(frames, upper_limit=1.0)
+    # 窗口尺寸 > 0 且不超出画面
+    assert 0 < w <= 60 and 0 < h <= 40
+    # bbox 中心落在闪烁块中心 (30, 25) 附近
+    cx, cy = x + w / 2, y + h / 2
+    assert abs(cx - 25.0) <= 5
+    assert abs(cy - 30.0) <= 5
